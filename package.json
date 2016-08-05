@@ -4,7 +4,8 @@
   "description": "Mock grunt runtime to easily unit-test tasks",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "testwatch": "mocha --watch"
   },
   "keywords": [
     "grunt",
@@ -14,5 +15,14 @@
     "task"
   ],
   "author": "Ralf Fischer <themakii@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "respoitory": {
+    "type": "git",
+    "url": "https://github.com/makii42/mock-grunt.git"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "istanbul": "^0.4.4",
+    "mocha": "^3.0.1"
+  }
 }
