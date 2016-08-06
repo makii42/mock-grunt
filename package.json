@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha",
     "testwatch": "mocha --watch",
-    "cover": "istanbul cover _mocha"
+    "cover": "istanbul cover _mocha",
+    "versions": "autochecker 6 5 4 0.12 0.10.44",
+    "prepublish": "npm run versions"
   },
   "keywords": [
     "grunt",
