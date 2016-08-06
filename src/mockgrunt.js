@@ -16,15 +16,21 @@ function MockGrunt () {
 
   this.log = {
     _logs: [],
-    subhead: function(msg) {
-      this._logs.push({ type: 'subhead', msg: msg });
-    },
-    errorlns: function(msg) {
-      this._logs.push({ type: 'errorlns', msg: msg });
-    },
-    warn: function(msg) {
-      this._logs.push({ type: 'warn', msg: msg });
-    }
+    // Currently unsupported: writetableln, writeflags, table, wordlist
+    write:      function(msg) { this._logs.push({ type: 'write'   , msg: msg, args: arguments }); },
+    writeln:    function(msg) { this._logs.push({ type: 'writeln' , msg: msg, args: arguments }); },
+    warn:       function(msg) { this._logs.push({ type: 'warn'    , msg: msg, args: arguments }); },
+    error:      function(msg) { this._logs.push({ type: 'error'   , msg: msg, args: arguments }); },
+    ok:         function(msg) { this._logs.push({ type: 'ok'      , msg: msg, args: arguments }); },
+    errorlns:   function(msg) { this._logs.push({ type: 'errorlns', msg: msg, args: arguments }); },
+    oklns:      function(msg) { this._logs.push({ type: 'oklns'   , msg: msg, args: arguments }); },
+    success:    function(msg) { this._logs.push({ type: 'success' , msg: msg, args: arguments }); },
+    fail:       function(msg) { this._logs.push({ type: 'fail'    , msg: msg, args: arguments }); },
+    header:     function(msg) { this._logs.push({ type: 'header'  , msg: msg, args: arguments }); },
+    subhead:    function(msg) { this._logs.push({ type: 'subhead' , msg: msg, args: arguments }); },
+    debug:      function(msg) { this._logs.push({ type: 'debug'   , msg: msg, args: arguments }); },
+    writelns:   function(msg) { this._logs.push({ type: 'writelns', msg: msg, args: arguments }); },
+    writeflags: function(msg) { this._logs.push({ type: 'subhead' , msg: msg, args: arguments }); },
   };
 
   this.file = {
@@ -46,7 +52,7 @@ function MockGrunt () {
 }
 
 MockGrunt.prototype.registerMultiTask = function(name, desc, f) {
-  if(!task) {
+  if(!f) {
     f = desc;
     desc = undefined;
   }
@@ -55,7 +61,7 @@ MockGrunt.prototype.registerMultiTask = function(name, desc, f) {
   this.tasks[name] = task;
 };
 
-MockGrunt.prototype.assertTask = function(name) {
+MockGrunt.prototype.assertTaskRegistered = function(name) {
   assert(name, 'you need to provide a task name');
   assert(this.tasks[name], 'no task with name ' + name + ' was registered yet.');
 };
