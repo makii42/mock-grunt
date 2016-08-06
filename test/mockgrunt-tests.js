@@ -3,7 +3,7 @@ var MockGrunt = require('../'),
     sinon = require('sinon');
 
 
-describe('mockgrunt', function() {
+describe('mock grunt', function() {
   var mockGrunt,
       msg = 'that\'s so cool';
 
@@ -12,7 +12,7 @@ describe('mockgrunt', function() {
   });
 
 
-  describe('taskRegistration', function() {
+  describe('task', function() {
 
     it('registers a multitask without description', function() {
       var spy = sinon.spy();
@@ -32,7 +32,58 @@ describe('mockgrunt', function() {
       task(mockGrunt);
       mockGrunt.assertTaskRegistered('another_task');
       assert.deepEqual(mockGrunt.tasks.another_task.f, spy);
-    })
+    });
+
+    it('triggers a regular task', function() {
+      var spy = sinon.spy(),
+         task = function(grunt) {
+        grunt.registerMultiTask('foo', spy);
+      };
+      task(mockGrunt);
+
+      var opts = { foo: 'bar' },
+       doneSpy = sinon.spy();
+      mockGrunt.triggerTask('foo', opts, doneSpy);
+
+      assert(spy.calledOnce);
+
+      assert(doneSpy.calledOnce);
+    });
+
+    it('triggers an async task', function() {
+      var opts = { foo: 'bar' },
+       doneSpy = sinon.spy();
+
+      var task = function(grunt) {
+        grunt.registerMultiTask('foo', function() {
+          var done = this.async();
+          done();
+        });
+      };
+      task(mockGrunt);
+
+      mockGrunt.triggerTask('foo', opts, doneSpy);
+
+      assert(doneSpy.calledOnce);
+    });
+
+    it('trigger works with really async code', function(done) {
+      var task = function(grunt) {
+        grunt.registerMultiTask('foo', function() {
+          var taskDone = this.async();
+          setTimeout(function() {
+            taskDone();
+          }, 5);
+        });
+      };
+
+      task(mockGrunt);
+
+      mockGrunt.triggerTask('foo', {}, function() {
+        done();
+      });
+    });
+
 
   });
 

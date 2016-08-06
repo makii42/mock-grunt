@@ -67,7 +67,7 @@ MockGrunt.prototype.assertTaskRegistered = function(name) {
 };
 
 MockGrunt.prototype.triggerTask = function(name, opts, done) {
-  this.assertTask(name);
+  this.assertTaskRegistered(name);
   task = this.tasks[name];
   var isAsync = false;
   task.async = function() {
@@ -76,7 +76,7 @@ MockGrunt.prototype.triggerTask = function(name, opts, done) {
       done(res);
     }
   };
-  task.f.call(task, opts);
+  task.f.call(task);
   if(!isAsync) {
     done();
   }
