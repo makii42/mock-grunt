@@ -7,7 +7,9 @@
     "test": "mocha",
     "testwatch": "mocha --watch",
     "cover": "istanbul cover _mocha",
-    "versions": "autochecker 6 5 4 0.12 0.10.44"
+    "checkVersions": "autochecker 6 5 4 0.12 0.10.44",
+    "preversion": "npm run checkVersions",
+    "postversion": "git push && git push --tags"
   },
   "keywords": [
     "grunt",
