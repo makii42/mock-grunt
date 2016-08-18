@@ -2,6 +2,7 @@ Mock Grunt
 ==========
 
 [![Build Status](https://travis-ci.org/makii42/mock-grunt.svg?branch=master)](https://travis-ci.org/makii42/mock-grunt/)
+![dependencies](https://david-dm.org/makii42/mock-grunt.svg)
 
 When writing tasks in grunt, testing the acutal file implementing the tasks itself is not easily
 to test.
